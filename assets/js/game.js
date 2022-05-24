@@ -28,14 +28,14 @@ var fight = function(enemyName) {
             if (confirmSkip) {
             window.alert(playerName + ' has decided to skip this fight. Goodbye!');
             // subtract money from playerMoney for skipping
-            playerMoney = playerMoney - 10;
+            playerMoney = Math.max(0, playerMoney - 10);
             console.log("playerMoney", playerMoney)
             break;
             }
         }
     
         // remove enemy's health by subtracting the amount set in the playerAttack variable
-        enemyHealth = enemyHealth - playerAttack;
+        enemyHealth = Math.max(0, enemyHealth - playerAttack);
         console.log(
             playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
         );
@@ -54,7 +54,7 @@ var fight = function(enemyName) {
         }
   
         // remove players's health by subtracting the amount set in the enemyAttack variable
-        playerHealth = playerHealth - enemyAttack;
+        playerHealth = Math.max(0, playerHealth - enemyAttack);
         console.log(
             enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
         );
@@ -85,7 +85,7 @@ var startGame = function(){
          // pick a new enemy to fight based on the index of the enemyNames array
          var pickedEnemyName = enemyNames[i];
          // reset enemy health before starting new fight 
-         enemyHealth = 50;
+         enemyHealth = randomNumber(40,60);
          fight(pickedEnemyName);
          // if we're not at the last enemy in the array
          if (playerHealth > 0 && i < enemyNames.length - 1) {
@@ -118,6 +118,13 @@ var startGame = function(){
             // after loop ends, player is out of health or enemies, so end end game
             endGame();
 };
+
+// RANDOM NUMBER
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+  
+    return value;
+  };
 
 // function to end the entire game
 var endGame = function() {
